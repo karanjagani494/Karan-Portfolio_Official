@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Github, ExternalLink } from 'lucide-react';
+import { ExternalLink, Eye } from 'lucide-react';
 import { MagneticButton } from './MagneticButton';
 
 export const ProjectCard = ({ project, onClick, isExpanded = false, layoutId, className = '' }) => {
@@ -34,12 +34,27 @@ export const ProjectCard = ({ project, onClick, isExpanded = false, layoutId, cl
                     )}
                 </div>
 
+                {isExpanded && (project.role || project.timeline) && (
+                    <div className="flex flex-wrap gap-4 mb-6 text-sm">
+                        {project.role && (
+                            <div className="flex items-center gap-2 text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
+                                <span className="font-semibold">Role:</span> {project.role}
+                            </div>
+                        )}
+                        {project.timeline && (
+                            <div className="flex items-center gap-2 text-gray-400 bg-white/5 px-3 py-1 rounded-full border border-white/5">
+                                <span className="font-semibold">Timeline:</span> {project.timeline}
+                            </div>
+                        )}
+                    </div>
+                )}
+
                 <p className={`text-gray-400 mb-6 ${!isExpanded ? 'line-clamp-2 flex-grow' : ''}`}>
                     {isExpanded ? (project.longDescription || project.description) : project.description}
                 </p>
 
                 {isExpanded && project.features && (
-                    <div className="mb-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div className="mb-8 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-100">
                         <h4 className="text-lg font-semibold mb-3 text-white">Key Features</h4>
                         <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
                             {project.features.map((feature, idx) => (
@@ -49,6 +64,31 @@ export const ProjectCard = ({ project, onClick, isExpanded = false, layoutId, cl
                                 </li>
                             ))}
                         </ul>
+                    </div>
+                )}
+
+                {isExpanded && project.outcome && (
+                    <div className="mb-8 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-200">
+                        <h4 className="text-lg font-semibold mb-2 text-white">Outcome</h4>
+                        <p className="text-gray-300 italic border-l-2 border-primary/50 pl-4 py-1">
+                            {project.outcome}
+                        </p>
+                    </div>
+                )}
+
+                {isExpanded && project.challenges && (
+                    <div className="mb-8 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-300">
+                        <h4 className="text-lg font-semibold mb-3 text-white">Challenges & Solutions</h4>
+                        <div className="space-y-3">
+                            {project.challenges.map((challenge, idx) => (
+                                <div key={idx} className="bg-white/5 p-4 rounded-lg border border-white/5">
+                                    <p className="text-sm text-gray-300">
+                                        <span className="text-primary font-bold mr-2">Goal:</span>
+                                        {challenge}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 )}
 
@@ -64,16 +104,22 @@ export const ProjectCard = ({ project, onClick, isExpanded = false, layoutId, cl
                 </div>
 
                 <div className="flex gap-4 mt-auto">
-                    <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex-1">
-                        <MagneticButton className="w-full py-3 flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 rounded-xl text-sm font-medium transition-colors duration-300 border border-white/5 hover:border-white/20">
-                            <Github size={18} /> Code
-                        </MagneticButton>
-                    </a>
-                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="flex-1">
+                    {!isExpanded && (
+                        <div onClick={(e) => { e.stopPropagation(); onClick(); }} className="flex-1">
+                            <MagneticButton className="w-full py-3 flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 rounded-xl text-sm font-medium transition-colors duration-300 border border-white/5 hover:border-white/20">
+                                <Eye size={18} /> View Details
+                            </MagneticButton>
+                        </div>
+                    )}
+                    <div onClick={(e) => {
+                        e.stopPropagation();
+                        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                        if (isExpanded) onClick();
+                    }} className="flex-1 cursor-pointer">
                         <MagneticButton className="w-full py-3 flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-black rounded-xl text-sm font-medium transition-colors duration-300 shadow-lg shadow-primary/20 hover:shadow-primary/40">
                             <ExternalLink size={18} /> Demo
                         </MagneticButton>
-                    </a>
+                    </div>
                 </div>
             </div>
         </motion.div>

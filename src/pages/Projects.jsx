@@ -31,7 +31,7 @@ const Projects = () => {
         const searchString = (project.title + project.description + project.tech.join(' ')).toLowerCase();
         if (filter === 'Web') return searchString.includes('react') || searchString.includes('web');
         if (filter === 'AI') return searchString.includes('ai') || searchString.includes('learning') || searchString.includes('python');
-        if (filter === 'Systems') return searchString.includes('iot') || searchString.includes('arduino') || searchString.includes('embedded');
+        if (filter === 'Systems') return searchString.includes('iot') || searchString.includes('arduino') || searchString.includes('embedded') || searchString.includes('sql') || searchString.includes('database') || searchString.includes('mysql');
         return true;
     });
 
@@ -102,7 +102,13 @@ const Projects = () => {
                                 className="fixed inset-0 bg-black/90 z-40 backdrop-blur-sm"
                             />
                             <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
-                                <div className="w-full max-w-4xl max-h-[90vh] pointer-events-auto overflow-y-auto custom-scrollbar rounded-2xl">
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.95 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="w-full max-w-4xl max-h-[90vh] pointer-events-auto overflow-y-auto custom-scrollbar rounded-2xl"
+                                >
                                     {filteredProjects.find(p => p.id === selectedId) && (
                                         <ProjectCard
                                             project={filteredProjects.find(p => p.id === selectedId)}
@@ -111,7 +117,7 @@ const Projects = () => {
                                             onClick={() => setSelectedId(null)}
                                         />
                                     )}
-                                </div>
+                                </motion.div>
                             </div>
                         </>
                     )}

@@ -9,11 +9,12 @@ export const TimelineItem = ({ item, index }) => {
         <div className={`flex flex-col md:flex-row gap-8 items-center justify-center w-full mb-12 ${isEven ? 'md:flex-row-reverse' : ''}`}>
             {/* Content */}
             <motion.div
-                initial={{ opacity: 0, x: isEven ? 50 : -50 }}
+                initial={{ opacity: 0, x: isEven ? 20 : -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="w-full md:w-5/12 bg-surface/50 backdrop-blur-sm p-6 rounded-2xl border border-white/10 hover:border-primary/30 transition-all group"
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.4, delay: index * 0.1, ease: "easeOut" }}
+                className="w-full md:w-5/12 bg-surface/50 backdrop-blur-sm p-6 rounded-2xl border border-white/10 hover:border-primary/30 transition-colors duration-300 group"
+                style={{ willChange: "transform, opacity" }}
             >
                 <div className="flex items-center gap-3 mb-2">
                     <div className="p-2 bg-primary/10 rounded-lg text-primary">
