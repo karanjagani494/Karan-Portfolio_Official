@@ -5,17 +5,22 @@ import { Briefcase } from 'lucide-react';
 export const TimelineItem = ({ item, index }) => {
     const isEven = index % 2 === 0;
 
+    const isPresent = item.period && (item.period.includes("Present") || item.period.includes("Current"));
+
     return (
-        <div className={`flex flex-col md:flex-row gap-8 items-center justify-center w-full mb-12 ${isEven ? 'md:flex-row-reverse' : ''}`}>
+        <div className={`flex flex-col md:flex-row gap-8 items-center justify-center w-full mb-12 ${isEven ? 'md:flex-row-reverse' : ''} group`}>
             {/* Content */}
             <motion.div
                 initial={{ opacity: 0, x: isEven ? 20 : -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.4, delay: index * 0.1, ease: "easeOut" }}
-                className="w-full md:w-5/12 bg-surface/50 backdrop-blur-sm p-6 rounded-2xl border border-white/10 hover:border-primary/30 transition-colors duration-300 group"
+                className={`w-full md:w-5/12 bg-surface/50 backdrop-blur-sm p-6 rounded-2xl border ${isPresent ? 'border-primary/40 shadow-[0_0_15px_rgba(99,102,241,0.15)]' : 'border-white/10'} hover:border-primary/50 transition-colors duration-300 group-hover:shadow-primary/10 relative`}
                 style={{ willChange: "transform, opacity" }}
             >
+                {/* Horizontal Connecting Line (Mobile: Hidden, Desktop: Visible) */}
+                <div className={`hidden md:block absolute top-1/2 -translate-y-1/2 w-10 h-[1px] bg-white/20 group-hover:bg-primary/50 transition-colors duration-300 ${isEven ? '-left-10' : '-right-10'}`} />
+
                 <div className="flex items-center gap-3 mb-2">
                     <div className="p-2 bg-primary/10 rounded-lg text-primary">
                         <Briefcase size={20} />
@@ -42,13 +47,19 @@ export const TimelineItem = ({ item, index }) => {
             </motion.div>
 
             {/* Center Line & Dot */}
-            <div className="hidden md:flex flex-col items-center w-2/12 relative">
-                <div className="w-0.5 h-full bg-white/10 absolute top-0 bottom-0" />
+            <div className="hidden md:flex flex-col items-center w-2/12 relative min-h-[150px] justify-center">
+                {/* Vertical Line */}
+                <div className="w-[1px] h-[150%] bg-white/10 absolute top-[-25%] bottom-[-25%] group-hover:bg-white/30 transition-colors duration-300" />
+
+                {/* Dot */}
                 <motion.div
                     initial={{ scale: 0 }}
                     whileInView={{ scale: 1 }}
                     viewport={{ once: true }}
-                    className="w-4 h-4 bg-primary rounded-full z-10 shadow-[0_0_10px_rgba(99,102,241,0.5)]"
+                    className={`w-4 h-4 rounded-full z-10 transition-all duration-300 ${isPresent
+                            ? 'bg-primary shadow-[0_0_15px_rgba(99,102,241,1)] scale-110'
+                            : 'bg-surface border-2 border-primary group-hover:bg-primary group-hover:scale-125 group-hover:shadow-[0_0_10px_rgba(99,102,241,0.8)]'
+                        }`}
                 />
             </div>
 
