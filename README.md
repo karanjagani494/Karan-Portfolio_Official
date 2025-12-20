@@ -1,6 +1,10 @@
 # Karan Jagani - Interactive Portfolio 🚀
 
+
+
 A highly interactive, immersive personal portfolio website built with modern web technologies. This project features physics-based animations, 3D face-tracking interactions, and a dynamic starfield background to create a unique user experience.
+
+https://github.com/karanjagani494
 
 ![Portfolio Preview](public/Homepage.png) 
 
