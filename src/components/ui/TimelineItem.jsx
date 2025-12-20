@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Briefcase } from 'lucide-react';
 
-export const TimelineItem = ({ item, index }) => {
+export const TimelineItem = ({ item, index, isFirst, isLast }) => {
     const isEven = index % 2 === 0;
 
     const isPresent = item.period && (item.period.includes("Present") || item.period.includes("Current"));
@@ -45,13 +45,19 @@ export const TimelineItem = ({ item, index }) => {
 
             {/* Center Line & Dot */}
             <div className="hidden md:flex flex-col items-center w-2/12 relative min-h-[150px] justify-center">
-                {/* Horizontal Connecting Line - Now inside center column to ensure connectivity */}
+                {/* Horizontal Connecting Line - Permanently Glowing White */}
                 <div
-                    className={`absolute top-1/2 -translate-y-1/2 h-[1px] bg-white/20 group-hover:bg-primary/50 transition-colors duration-300 w-1/2 ${isEven ? 'right-0' : 'left-0'}`}
+                    className={`absolute top-1/2 -translate-y-1/2 h-[1px] bg-zinc-400 shadow-[0_0_8px_rgba(255,255,255,0.4)] transition-colors duration-300 w-1/2 ${isEven ? 'right-0' : 'left-0'}`}
                 />
 
-                {/* Vertical Line - Extended to ensure no gaps */}
-                <div className="w-[1px] h-[200%] bg-white/10 absolute top-[-50%] bottom-[-50%] group-hover:bg-white/30 transition-colors duration-300" />
+                {/* Vertical Line - Permanently visible white rail */}
+                <div
+                    className={`w-[1px] bg-zinc-400 absolute transition-colors duration-300 left-1/2 -translate-x-1/2 shadow-[0_0_10px_rgba(255,255,255,0.3)]`}
+                    style={{
+                        top: isFirst ? '0' : '-50%',
+                        bottom: isLast ? '0' : '-50%'
+                    }}
+                />
 
                 {/* Dot Container */}
                 <div className="relative z-10 flex items-center justify-center">
@@ -67,7 +73,7 @@ export const TimelineItem = ({ item, index }) => {
                         viewport={{ once: true }}
                         className={`relative w-4 h-4 rounded-full transition-all duration-300 ${isPresent
                             ? 'bg-primary shadow-[0_0_20px_rgba(99,102,241,1)] scale-110'
-                            : 'bg-surface border-2 border-primary group-hover:bg-primary group-hover:scale-125 group-hover:shadow-[0_0_10px_rgba(99,102,241,0.8)]'
+                            : 'bg-primary group-hover:scale-125 group-hover:shadow-[0_0_10px_rgba(99,102,241,0.5)]'
                             }`}
                     />
                 </div>

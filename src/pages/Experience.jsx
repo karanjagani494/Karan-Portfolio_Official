@@ -15,7 +15,13 @@ const Experience = () => {
 
                 <div className="relative">
                     {siteData.experience.map((item, index) => (
-                        <TimelineItem key={index} item={item} index={index} />
+                        <TimelineItem
+                            key={index}
+                            item={item}
+                            index={index}
+                            isFirst={index === 0}
+                            isLast={index === siteData.experience.length - 1}
+                        />
                     ))}
                 </div>
             </SectionWrapper>
