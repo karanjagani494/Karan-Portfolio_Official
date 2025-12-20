@@ -8,6 +8,7 @@ export function FaceTracker() {
     const { steeringRef, faceSpeedRef } = useStarfield();
 
     useEffect(() => {
+        // Initialization handled with timeout to prevent mobile lag
         let timeoutId;
 
         const startWebcam = async () => {

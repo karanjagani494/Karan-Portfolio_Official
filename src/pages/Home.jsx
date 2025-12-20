@@ -87,7 +87,7 @@ const Home = () => {
                     </button>
 
                     <a
-                        href="/cv.pdf"
+                        href="/Karan_Jagani_CV.pdf"
                         download="Karan_Jagani_CV.pdf"
                         className="inline-block"
                     >
