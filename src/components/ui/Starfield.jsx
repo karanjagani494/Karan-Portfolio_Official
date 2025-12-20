@@ -13,6 +13,7 @@ const StarfieldComponent = () => {
     }, [speedMultiplier]);
 
     useEffect(() => {
+        let animationId;
         const canvas = canvasRef.current;
         if (!canvas) return;
 
@@ -175,16 +176,21 @@ const StarfieldComponent = () => {
         window.addEventListener('touchend', handleMouseUp);
 
         resize();
-        const animationId = requestAnimationFrame(update);
+
+        // Delay animation loop to allow initial UI (name scramble) to render smoothly
+        const startTimeout = setTimeout(() => {
+            animationId = requestAnimationFrame(update);
+        }, 1000);
 
         return () => {
+            clearTimeout(startTimeout);
             window.removeEventListener('resize', resize);
             window.removeEventListener('mousedown', handleMouseDown);
             window.removeEventListener('mouseup', handleMouseUp);
             window.removeEventListener('mousemove', handleMouseMove);
             window.removeEventListener('touchstart', handleMouseDown);
             window.removeEventListener('touchend', handleMouseUp);
-            cancelAnimationFrame(animationId);
+            if (animationId) cancelAnimationFrame(animationId);
         };
     }, []); // Empty dependency array - we use refs for updates
 
