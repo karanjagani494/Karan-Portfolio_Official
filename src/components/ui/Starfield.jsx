@@ -22,7 +22,8 @@ const StarfieldComponent = () => {
         let width = 0;
         let height = 0;
         let stars = [];
-        const numStars = 200;
+        const isMobile = window.innerWidth < 768;
+        const numStars = isMobile ? 80 : 200; // Reduce stars on mobile for performance
 
         // Speed control
         const baseSpeed = 100;
