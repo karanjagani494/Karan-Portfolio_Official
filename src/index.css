@@ -10,8 +10,12 @@
   body {
     @apply text-white antialiased;
     background-color: #000000;
-    color: #ffffff;
+    color: #f4f4f5;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  ::selection {
+    background-color: #ffffff;
+    color: #000000;
   }
 }
 

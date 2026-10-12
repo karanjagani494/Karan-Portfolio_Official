@@ -15,16 +15,16 @@ export const TimelineItem = ({ item, index, isFirst, isLast }) => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.4, delay: index * 0.1, ease: "easeOut" }}
-                className={`w-full md:w-5/12 bg-surface/50 backdrop-blur-sm p-6 rounded-2xl border ${isPresent ? 'border-primary/40 shadow-[0_0_15px_rgba(99,102,241,0.15)]' : 'border-white/10'} hover:border-primary/50 transition-colors duration-300 group-hover:shadow-primary/10 relative z-10`}
+                className={`w-full md:w-5/12 bg-surface/50 backdrop-blur-sm p-6 rounded-2xl border ${isPresent ? 'border-white/40 shadow-[0_0_15px_rgba(255,255,255,0.08)]' : 'border-white/10'} hover:border-white/40 transition-colors duration-300 relative z-10`}
                 style={{ willChange: "transform, opacity" }}
             >
                 <div className="flex items-center gap-3 mb-2">
-                    <div className="p-2 bg-primary/10 rounded-lg text-primary">
+                    <div className="p-2 bg-white/10 rounded-lg text-white">
                         <Briefcase size={20} />
                     </div>
                     <div>
-                        <h3 className="text-xl font-bold text-white group-hover:text-primary transition-colors">{item.role}</h3>
-                        <p className="text-primary/80 font-medium">{item.company}</p>
+                        <h3 className="text-xl font-bold text-white transition-colors">{item.role}</h3>
+                        <p className="text-gray-300 font-medium">{item.company}</p>
                     </div>
                 </div>
 
@@ -36,7 +36,7 @@ export const TimelineItem = ({ item, index, isFirst, isLast }) => {
                 <ul className="space-y-2">
                     {item.description.map((desc, i) => (
                         <li key={i} className="flex items-start gap-2 text-gray-400 text-sm">
-                            <span className="mt-1.5 w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0" />
+                            <span className="mt-1.5 w-1.5 h-1.5 bg-white/80 rounded-full flex-shrink-0" />
                             {desc}
                         </li>
                     ))}
@@ -47,12 +47,12 @@ export const TimelineItem = ({ item, index, isFirst, isLast }) => {
             <div className="hidden md:flex flex-col items-center w-2/12 relative min-h-[150px] justify-center">
                 {/* Horizontal Connecting Line - Permanently Glowing White */}
                 <div
-                    className={`absolute top-1/2 -translate-y-1/2 h-[1px] bg-zinc-400 shadow-[0_0_8px_rgba(255,255,255,0.4)] transition-colors duration-300 w-1/2 ${isEven ? 'right-0' : 'left-0'}`}
+                    className={`absolute top-1/2 -translate-y-1/2 h-[1px] bg-zinc-600 transition-colors duration-300 w-1/2 ${isEven ? 'right-0' : 'left-0'}`}
                 />
 
-                {/* Vertical Line - Permanently visible white rail */}
+                {/* Vertical Line - Clean subtle rail */}
                 <div
-                    className={`w-[1px] bg-zinc-400 absolute transition-colors duration-300 left-1/2 -translate-x-1/2 shadow-[0_0_10px_rgba(255,255,255,0.3)]`}
+                    className={`w-[1px] bg-zinc-700 absolute transition-colors duration-300 left-1/2 -translate-x-1/2`}
                     style={{
                         top: isFirst ? '0' : '-50%',
                         bottom: isLast ? '0' : '-50%'
@@ -63,7 +63,7 @@ export const TimelineItem = ({ item, index, isFirst, isLast }) => {
                 <div className="relative z-10 flex items-center justify-center">
                     {/* Pulsating Glow for Present */}
                     {isPresent && (
-                        <div className="absolute w-4 h-4 bg-primary rounded-full animate-ping opacity-75" />
+                        <div className="absolute w-3.5 h-3.5 bg-white rounded-full animate-ping opacity-40" />
                     )}
 
                     {/* Main Dot */}
@@ -71,9 +71,9 @@ export const TimelineItem = ({ item, index, isFirst, isLast }) => {
                         initial={{ scale: 0 }}
                         whileInView={{ scale: 1 }}
                         viewport={{ once: true }}
-                        className={`relative w-4 h-4 rounded-full transition-all duration-300 ${isPresent
-                            ? 'bg-primary shadow-[0_0_20px_rgba(99,102,241,1)] scale-110'
-                            : 'bg-primary group-hover:scale-125 group-hover:shadow-[0_0_10px_rgba(99,102,241,0.5)]'
+                        className={`relative w-3.5 h-3.5 rounded-full transition-all duration-300 ${isPresent
+                            ? 'bg-white shadow-[0_0_12px_rgba(255,255,255,0.8)] scale-110'
+                            : 'bg-zinc-300 group-hover:scale-125 group-hover:bg-white group-hover:shadow-[0_0_10px_rgba(255,255,255,0.4)]'
                             }`}
                     />
                 </div>

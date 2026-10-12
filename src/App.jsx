@@ -1,5 +1,4 @@
 import { BrowserRouter as Router } from 'react-router-dom';
-import { SoundProvider } from './context/SoundContext';
 import { MainLayout } from './components/layout/MainLayout';
 import Home from './pages/Home';
 import About from './pages/About';
@@ -9,27 +8,25 @@ import Contact from './pages/Contact';
 
 function App() {
     return (
-        <SoundProvider>
-            <Router>
-                <MainLayout>
-                    <section id="home" className="min-h-screen flex flex-col justify-center">
-                        <Home />
-                    </section>
-                    <section id="about" className="min-h-screen flex flex-col justify-center py-20">
-                        <About />
-                    </section>
-                    <section id="projects" className="min-h-screen flex flex-col justify-center py-20">
-                        <Projects />
-                    </section>
-                    <section id="experience" className="min-h-screen flex flex-col justify-center py-20">
-                        <Experience />
-                    </section>
-                    <section id="contact" className="min-h-screen flex flex-col justify-center py-20">
-                        <Contact />
-                    </section>
-                </MainLayout>
-            </Router>
-        </SoundProvider>
+        <Router>
+            <MainLayout>
+                <section id="home" className="min-h-screen flex flex-col justify-center">
+                    <Home />
+                </section>
+                <section id="about" className="min-h-screen flex flex-col justify-center py-20">
+                    <About />
+                </section>
+                <section id="projects" className="min-h-screen flex flex-col justify-center py-20">
+                    <Projects />
+                </section>
+                <section id="experience" className="min-h-screen flex flex-col justify-center py-20">
+                    <Experience />
+                </section>
+                <section id="contact" className="min-h-screen flex flex-col justify-center py-20">
+                    <Contact />
+                </section>
+            </MainLayout>
+        </Router>
     );
 }
 

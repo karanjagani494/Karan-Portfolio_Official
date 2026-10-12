@@ -1,88 +1,67 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowRight, Download } from 'lucide-react';
-import { useSound } from '../context/SoundContext';
-import { useStarfield } from '../context/StarfieldContext';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { MagneticButton } from '../components/ui/MagneticButton';
-import { HyperText } from '../components/ui/HyperText';
 import { siteData } from '../config/siteData';
 
 const Home = () => {
     const containerRef = useRef(null);
-    const { playStartupSound } = useSound();
-    const { triggerWarp } = useStarfield();
-
-    useEffect(() => {
-        playStartupSound();
-    }, []);
-
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start start", "end start"]
-    });
-
-    const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-    const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-    const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
 
     const handleViewWork = () => {
-        triggerWarp();
         document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
     };
 
     return (
-        <div ref={containerRef} className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
-
-            {/* Background Glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/20 blur-[100px] rounded-full -z-10" />
-
-            <motion.div
-                style={{ y, opacity, scale }}
-                className="text-center z-10 px-4"
-            >
-                <motion.h2
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                    className="text-xl md:text-2xl font-medium text-primary mb-6 tracking-widest uppercase"
-                >
-                    Hello, I am
-                </motion.h2>
-
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 1, ease: "easeOut" }}
-                    className="mb-8"
-                >
-                    <HyperText
-                        text={siteData.name}
-                        className="text-6xl md:text-9xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white via-primary to-white bg-[length:200%_auto] pb-4"
-                    />
-                </motion.div>
-
+        <div ref={containerRef} className="relative min-h-screen flex flex-col items-center justify-center px-4">
+            <div className="text-center z-10 max-w-4xl mx-auto flex flex-col items-center">
                 <motion.p
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
-                    className="text-2xl md:text-4xl text-gray-400 mb-12 font-light max-w-4xl mx-auto leading-tight"
+                    transition={{ duration: 0.6 }}
+                    className="font-mono text-sm md:text-base text-zinc-400 mb-5 tracking-widest uppercase"
+                >
+                    Hi, my name is
+                </motion.p>
+
+                <motion.h1
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, delay: 0.1 }}
+                    className="text-6xl sm:text-7xl md:text-8xl font-bold tracking-tight text-white mb-4"
+                >
+                    {siteData.name}
+                </motion.h1>
+
+                <motion.h2
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, delay: 0.2 }}
+                    className="text-2xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-zinc-400 mb-8 max-w-3xl leading-snug"
                 >
                     {siteData.role}
+                </motion.h2>
+
+                <motion.p
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, delay: 0.3 }}
+                    className="text-base sm:text-lg text-zinc-400 max-w-xl mx-auto mb-12 leading-relaxed"
+                >
+                    I build resilient full-stack applications, intelligent AI pipelines, and accessible digital experiences with a focus on performance and clean architecture.
                 </motion.p>
 
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.6 }}
-                    className="flex flex-col md:flex-row items-center gap-6 justify-center"
+                    transition={{ duration: 0.7, delay: 0.4 }}
+                    className="flex flex-col sm:flex-row items-center gap-4 justify-center"
                 >
                     <button onClick={handleViewWork}>
                         <MagneticButton
-                            whileHover={{ scale: 1.05 }}
-                            className="px-10 py-4 bg-white text-black rounded-full font-semibold text-lg flex items-center gap-2"
+                            className="px-8 py-3.5 bg-white text-black hover:bg-zinc-200 rounded-full font-medium text-sm flex items-center gap-2 transition-colors"
                         >
-                            View Work
-                            <ArrowRight size={20} />
+                            View Projects
+                            <ArrowRight size={16} />
                         </MagneticButton>
                     </button>
 
@@ -92,15 +71,14 @@ const Home = () => {
                         className="inline-block"
                     >
                         <MagneticButton
-                            whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
-                            className="px-10 py-4 bg-transparent border border-white/20 text-white rounded-full font-semibold text-lg flex items-center gap-2 backdrop-blur-sm"
+                            className="px-8 py-3.5 bg-transparent border border-white/20 text-white hover:border-white/50 hover:bg-white/5 rounded-full font-medium text-sm flex items-center gap-2 transition-all"
                         >
                             Download CV
-                            <Download size={20} />
+                            <Download size={16} />
                         </MagneticButton>
                     </a>
                 </motion.div>
-            </motion.div>
+            </div>
 
             {/* Scroll Indicator */}
             <motion.div

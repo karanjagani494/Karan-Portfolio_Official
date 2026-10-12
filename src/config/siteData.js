@@ -3,7 +3,7 @@ import DBMS_IMG from "../assets/images/DBMS.jpeg";
 import LEAF_IMG from "../assets/images/Img_pro.jpeg";
 export const siteData = {
     name: "Karan Jagani",
-    role: "Computer Science Student & Future Software Engineer",
+    role: "Full Stack Developer & AI Engineer",
     location: "Cambridge, UK",
     email: "karanjagani2003@gmail.com",
     social: [
@@ -110,8 +110,7 @@ export const siteData = {
             challenges: ["Optimizing 3D particle systems for mobile devices", "Designing a cohesive physics-based interaction model"],
             features: [
                 "Performance-optimized animations",
-                "Interactive 3D starfield",
-                "Face tracking integration (experimental)",
+                "Interactive background effects",
                 "Responsive grid layout",
                 "Aceternity UI components"
             ],

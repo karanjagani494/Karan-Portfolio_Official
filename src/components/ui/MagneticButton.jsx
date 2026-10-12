@@ -1,11 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { useSound } from '../../context/SoundContext';
-
 export const MagneticButton = ({ children, className = "", onClick, ...props }) => {
     const ref = useRef(null);
     const [position, setPosition] = useState({ x: 0, y: 0 });
-    const { playSound } = useSound();
 
     const handleMouseMove = (e) => {
         const { clientX, clientY } = e;
@@ -19,12 +16,7 @@ export const MagneticButton = ({ children, className = "", onClick, ...props }) 
         setPosition({ x: 0, y: 0 });
     };
 
-    const handleMouseEnter = () => {
-        playSound('hover');
-    };
-
     const handleClick = (e) => {
-        playSound('click');
         if (onClick) onClick(e);
     };
 
@@ -34,7 +26,6 @@ export const MagneticButton = ({ children, className = "", onClick, ...props }) 
             className={`relative ${className}`}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            onMouseEnter={handleMouseEnter}
             onClick={handleClick}
             animate={{ x: position.x, y: position.y }}
             transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}

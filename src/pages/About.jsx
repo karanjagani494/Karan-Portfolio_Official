@@ -34,24 +34,24 @@ const About = () => {
                         </div>
                     </div>
 
-                    {/* Image/Visual */}
+                    {/* Image/Visual - Professional B&W */}
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
+                        initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
+                        transition={{ duration: 0.7, ease: "easeOut" }}
                         className="relative"
                     >
-                        <div className="aspect-square max-w-md mx-auto rounded-2xl overflow-hidden border border-white/10 shadow-2xl relative group">
-                            <div className="absolute inset-0 bg-primary/20 mix-blend-overlay group-hover:opacity-0 transition-opacity duration-500" />
+                        <div className="aspect-[3/4] max-w-sm mx-auto rounded-2xl overflow-hidden border border-white/20 shadow-2xl relative group bg-zinc-950">
                             <img
                                 src={profileImage}
-                                alt="Profile"
-                                className="w-full h-full object-cover"
+                                alt="Karan Jagani"
+                                className="w-full h-full object-cover grayscale contrast-110 brightness-95 group-hover:scale-[1.02] transition-transform duration-700"
                             />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
                         </div>
-                        {/* Decorative elements */}
-                        <div className="absolute -top-4 -right-4 w-24 h-24 bg-primary/30 rounded-full blur-2xl -z-10" />
-                        <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-white/5 rounded-full blur-2xl -z-10" />
+                        {/* Subtle Monochrome Ambient Rim */}
+                        <div className="absolute -inset-4 bg-white/[0.04] rounded-3xl blur-2xl -z-10 pointer-events-none" />
                     </motion.div>
                 </div>
 

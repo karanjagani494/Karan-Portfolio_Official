@@ -8,16 +8,16 @@ export default {
         extend: {
             colors: {
                 primary: {
-                    DEFAULT: '#ffffffff', // Indigo 500
-                    foreground: '#ffffff',
+                    DEFAULT: '#ffffff',
+                    foreground: '#000000',
                 },
                 secondary: {
-                    DEFAULT: '#a855f7', // Purple 500
-                    foreground: '#ffffff',
+                    DEFAULT: '#a1a1aa', // Zinc 400
+                    foreground: '#000000',
                 },
-                background: '#000000',
-                foreground: '#ffffff',
-                surface: '#18181b', // Zinc 900 - Neutral Dark
+                background: '#09090b', // Deep sleek zinc black
+                foreground: '#f4f4f5',
+                surface: '#121215',    // Refined subtle dark surface
             },
             fontFamily: {
                 sans: ['Inter', 'sans-serif'],

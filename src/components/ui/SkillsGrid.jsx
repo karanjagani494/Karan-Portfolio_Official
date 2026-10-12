@@ -28,8 +28,8 @@ export const SkillsGrid = () => {
                                 initial={{ opacity: 0, scale: 0.8 }}
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 viewport={{ once: true }}
-                                whileHover={{ scale: 1.05, backgroundColor: "rgba(99, 102, 241, 0.2)" }}
-                                className="px-3 py-1 bg-white/5 rounded-full text-sm text-gray-300 border border-white/10 cursor-default"
+                                whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.12)" }}
+                                className="px-3 py-1 bg-white/5 rounded-full text-sm text-gray-300 border border-white/10 hover:border-white/30 cursor-default transition-colors"
                             >
                                 {skill}
                             </motion.span>

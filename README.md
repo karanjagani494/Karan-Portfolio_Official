@@ -10,9 +10,8 @@ https://github.com/karanjagani494
 
 ## ✨ Features
 
-- ** immersive 3D Experience**:
-    - **Starfield Background**: A dynamic, warp-speed enabled starfield that reacts to user interaction.
-    - **Face Tracking**: Uses your webcam (locally processing via MediaPipe) to control the parallax effect and cursor interaction 🤯. *Privacy focused: No video data leaves your device.*
+- **Interactive Background**:
+    - **Starfield Background**: A dynamic starfield background responding to mouse interactions.
 - **Physics-Based Animations**: Powered by **Framer Motion**, every element feels alive with smooth spring animations, magnetic buttons, and layout transitions.
 - **Sound Design**: Integrated sound effects for startup, clicks, and interactions for a multi-sensory experience.
 - **Dynamic Projects Showcase**: Filterable project grid with expandable details using shared layout animations.
@@ -23,9 +22,6 @@ https://github.com/karanjagani494
 - **Core**: [React 19](https://react.dev/), [Vite](https://vitejs.dev/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **Animations**: [Framer Motion](https://www.framer.com/motion/)
-- **3D & AI**: 
-    - [React Three Fiber](https://docs.pmnd.rs/react-three-fiber) (3D rendering)
-    - [MediaPipe](https://developers.google.com/mediapipe) (Face Tracking)
 - **Routing**: [React Router](https://reactrouter.com/)
 - **Icons**: [Lucide React](https://lucide.dev/)
 
@@ -64,7 +60,6 @@ https://github.com/karanjagani494
 ```
 src/
 ├── components/
-│   ├── 3d/           # Three.js & Face tracking components
 │   ├── layout/       # Navbar, Footer, MainLayout
 │   └── ui/           # Reusable UI components (ProjectCard, MagneticButton, etc.)
 ├── config/           # Site data and configuration
@@ -73,10 +68,6 @@ src/
 ├── utils/            # Helper functions
 └── assets/           # Images, sounds, and global styles
 ```
-
-## 🔒 Privacy Note
-
-This portfolio uses the `FaceTracker` component to enable head-movement parallax effects. **All processing is done locally in your browser** using MediaPipe. No video feed or facial data is ever recorded, stored, or sent to any server.
 
 ## 📄 License
 

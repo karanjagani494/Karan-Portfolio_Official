@@ -39,21 +39,21 @@ export const CustomCursor = () => {
 
     return (
         <motion.div
-            className="fixed top-0 left-0 w-8 h-8 rounded-full border-2 border-primary pointer-events-none z-[9999] hidden md:block mix-blend-difference"
+            className="fixed top-0 left-0 w-8 h-8 rounded-full border border-white/40 pointer-events-none z-[9999] hidden md:block"
             style={{
                 x: cursorXSpring,
                 y: cursorYSpring,
             }}
             animate={{
-                scale: isHovering ? 1.5 : 1,
-                backgroundColor: isHovering ? 'rgba(99, 102, 241, 0.2)' : 'transparent',
+                scale: isHovering ? 1.3 : 1,
+                borderColor: isHovering ? 'rgba(255, 255, 255, 0.8)' : 'rgba(255, 255, 255, 0.3)',
+                backgroundColor: isHovering ? 'rgba(255, 255, 255, 0.05)' : 'transparent',
             }}
             transition={{
-                scale: { duration: 0.2 },
-                backgroundColor: { duration: 0.2 }
+                scale: { duration: 0.15 },
             }}
         >
-            <div className="absolute top-1/2 left-1/2 w-1 h-1 bg-primary rounded-full -translate-x-1/2 -translate-y-1/2" />
+            <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-white/80 rounded-full -translate-x-1/2 -translate-y-1/2" />
         </motion.div>
     );
 };

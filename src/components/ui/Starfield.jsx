@@ -3,7 +3,7 @@ import { useStarfield } from '../../context/StarfieldContext';
 
 const StarfieldComponent = () => {
     const canvasRef = useRef(null);
-    const { speedMultiplier, steeringRef, faceSpeedRef } = useStarfield();
+    const { speedMultiplier } = useStarfield();
 
     // Use ref for speed to access it inside the animation loop without re-triggering useEffect
     const speedRef = useRef(speedMultiplier);
@@ -24,10 +24,10 @@ const StarfieldComponent = () => {
         let height = 0;
         let stars = [];
         const isMobile = window.innerWidth < 768;
-        const numStars = isMobile ? 80 : 200; // Reduce stars on mobile for performance
+        const numStars = isMobile ? 70 : 130; // Subtle, elegant star count
 
-        // Speed control
-        const baseSpeed = 100;
+        // Slow, elegant ambient speed
+        const baseSpeed = 22;
         let currentSpeed = baseSpeed;
 
         // Steering control
@@ -61,16 +61,9 @@ const StarfieldComponent = () => {
         };
 
         const handleMouseMove = (e) => {
-            targetCx = width / 2 + (width / 2 - e.clientX) * 0.5;
-            targetCy = height / 2 + (height / 2 - e.clientY) * 0.5;
+            targetCx = width / 2 + (width / 2 - e.clientX) * 0.15;
+            targetCy = height / 2 + (height / 2 - e.clientY) * 0.15;
         };
-
-        // Internal warp (click and hold)
-        let isMouseDown = false;
-        const handleMouseDown = () => {
-            isMouseDown = true;
-        };
-        const handleMouseUp = () => { isMouseDown = false; };
 
         const update = (time) => {
             if (!lastTime) lastTime = time;
@@ -79,48 +72,16 @@ const StarfieldComponent = () => {
 
             const dt = Math.min(deltaTime, 0.1);
 
-            // Determine target speed based on Context OR Mouse Down
-            const externalMultiplier = speedRef.current;
-            let currentBase = baseSpeed;
+            // Smoothly interpolate speed without any click acceleration
+            currentSpeed = baseSpeed;
 
-            // Check for Face Speed Boost (Eyebrows)
-            // faceSpeedRef is 0-1. We want to boost significantly.
-            if (faceSpeedRef.current > 0.05) {
-                // Non-linear boost for better feel
-                const boost = Math.pow(faceSpeedRef.current, 2) * 19; // Cap at 20x speed to match click
-                currentBase = baseSpeed * (1 + boost);
-            }
-
-            const targetSpeed = (isMouseDown || externalMultiplier > 1) ? baseSpeed * 20 : currentBase;
-
-            // Apply steering from Face Tracker if available
-            if (steeringRef.current) {
-                // steeringRef contains relative coordinates from -1 to 1 (inverted x for mirror feel)
-                // Map to screen coordinates
-                const steerX = steeringRef.current.x * (width / 2);
-                const steerY = steeringRef.current.y * (height / 2);
-
-                targetCx = width / 2 + steerX;
-                targetCy = height / 2 + steerY;
-            } else if (!steeringRef.current) {
-                // Only use mouse if no face tracking (optional fallback logic, currently mixed)
-            }
-
-            // Smoothly interpolate speed
-            currentSpeed += (targetSpeed - currentSpeed) * 5 * dt;
-
-            // Smoothly interpolate steering
-            cx += (targetCx - cx) * 2 * dt;
-            cy += (targetCy - cy) * 2 * dt;
+            // Subtle gentle parallax steering
+            cx += (targetCx - cx) * 1.2 * dt;
+            cy += (targetCy - cy) * 1.2 * dt;
 
             ctx.clearRect(0, 0, width, height);
 
-            // Warp effect threshold
-            const tailLength = currentSpeed > baseSpeed * 2 ? (currentSpeed / (baseSpeed * 20)) * 30 : 0;
-
-            // Force white stars
-            ctx.fillStyle = 'white';
-            ctx.strokeStyle = 'white';
+            ctx.fillStyle = '#ffffff';
 
             for (let i = 0; i < numStars; i++) {
                 const star = stars[i];
@@ -137,62 +98,42 @@ const StarfieldComponent = () => {
                 const x = cx + (star.x / star.z) * width;
                 const y = cy + (star.y / star.z) * height;
 
-                const size = (1 - star.z / width) * 4;
-                const alpha = (1 - star.z / width);
+                // Subtle delicate dots, soft opacity
+                const depthFactor = 1 - star.z / width;
+                const size = depthFactor * 1.8;
+                const alpha = depthFactor * 0.55;
 
                 if (x >= 0 && x <= width && y >= 0 && y <= height) {
                     ctx.globalAlpha = alpha;
-
-                    if (tailLength > 1) {
-                        // Draw warp lines
-                        const px = cx + (star.x / (star.z + tailLength)) * width;
-                        const py = cy + (star.y / (star.z + tailLength)) * height;
-
-                        ctx.beginPath();
-                        ctx.moveTo(px, py);
-                        ctx.lineTo(x, y);
-                        ctx.lineWidth = size > 0 ? size : 0.1;
-                        ctx.stroke();
-                    } else {
-                        // Draw dots
-                        ctx.beginPath();
-                        ctx.arc(x, y, size > 0 ? size : 0, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
+                    ctx.beginPath();
+                    ctx.arc(x, y, Math.max(size, 0.4), 0, Math.PI * 2);
+                    ctx.fill();
                 }
 
                 star.pz = star.z;
             }
 
             ctx.globalAlpha = 1.0;
-            requestAnimationFrame(update);
+            animationId = requestAnimationFrame(update);
         };
 
         window.addEventListener('resize', resize);
-        window.addEventListener('mousedown', handleMouseDown);
-        window.addEventListener('mouseup', handleMouseUp);
         window.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('touchstart', handleMouseDown);
-        window.addEventListener('touchend', handleMouseUp);
 
         resize();
 
-        // Delay animation loop to allow initial UI (name scramble) to render smoothly
+        // Delay animation loop to allow initial UI to render smoothly
         const startTimeout = setTimeout(() => {
             animationId = requestAnimationFrame(update);
-        }, 1000);
+        }, 300);
 
         return () => {
             clearTimeout(startTimeout);
             window.removeEventListener('resize', resize);
-            window.removeEventListener('mousedown', handleMouseDown);
-            window.removeEventListener('mouseup', handleMouseUp);
             window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('touchstart', handleMouseDown);
-            window.removeEventListener('touchend', handleMouseUp);
             if (animationId) cancelAnimationFrame(animationId);
         };
-    }, []); // Empty dependency array - we use refs for updates
+    }, []);
 
     return (
         <canvas

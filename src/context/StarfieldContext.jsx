@@ -6,8 +6,6 @@ export const StarfieldProvider = ({ children }) => {
     const [isWarping, setIsWarping] = useState(false);
     const [speedMultiplier, setSpeedMultiplier] = useState(1);
     const timeoutRef = useRef(null);
-    const steeringRef = useRef(null);
-    const faceSpeedRef = useRef(0);
 
     const triggerWarp = useCallback((duration = 1500) => {
         setIsWarping(true);
@@ -24,7 +22,7 @@ export const StarfieldProvider = ({ children }) => {
     }, []);
 
     return (
-        <StarfieldContext.Provider value={{ isWarping, triggerWarp, speedMultiplier, steeringRef, faceSpeedRef }}>
+        <StarfieldContext.Provider value={{ isWarping, triggerWarp, speedMultiplier }}>
             {children}
         </StarfieldContext.Provider>
     );
