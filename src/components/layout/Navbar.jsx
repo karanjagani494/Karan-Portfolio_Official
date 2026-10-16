@@ -1,133 +1,42 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 import { Menu, X } from 'lucide-react';
-import { cn } from '../../utils/cn';
 
-const navLinks = [
-    { name: 'Home', id: 'home' },
-    { name: 'About', id: 'about' },
-    { name: 'Projects', id: 'projects' },
-    { name: 'Experience', id: 'experience' },
-    { name: 'Contact', id: 'contact' },
-];
-
+const links = ['Home', 'About', 'Projects', 'Experience', 'Contact'];
 export const Navbar = () => {
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [activeSection, setActiveSection] = useState('home');
-
+    const [open, setOpen] = useState(false);
+    const [active, setActive] = useState('home');
+    const menuButton = useRef(null);
     useEffect(() => {
-        let ticking = false;
-
-        const handleScroll = () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    setIsScrolled(window.scrollY > 40);
-
-                    // Scroll Spy Logic
-                    const sections = navLinks.map(link => document.getElementById(link.id));
-                    const scrollPosition = window.scrollY + 100;
-
-                    for (const section of sections) {
-                        if (section && section.offsetTop <= scrollPosition && (section.offsetTop + section.offsetHeight) > scrollPosition) {
-                            setActiveSection(section.id);
-                        }
-                    }
-                    ticking = false;
-                });
-                ticking = true;
-            }
+        const update = () => {
+            const current = links.map(name => document.getElementById(name.toLowerCase())).filter(Boolean)
+                .filter(section => section.getBoundingClientRect().top <= 150).at(-1);
+            setActive(current?.id || 'home');
         };
-
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        update();
+        window.addEventListener('scroll', update, { passive: true });
+        return () => window.removeEventListener('scroll', update);
     }, []);
-
-    const scrollToSection = (id) => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-            setActiveSection(id);
-            setIsMobileMenuOpen(false);
-        }
-    };
-
-    return (
-        <motion.nav
-            initial={{ y: -80 }}
-            animate={{ y: 0 }}
-            className={cn(
-                "fixed top-0 left-0 right-0 z-50 transition-colors duration-200",
-                isScrolled ? "bg-black/90 backdrop-blur-sm border-b border-white/10 py-4" : "bg-transparent py-6"
-            )}
-        >
-            <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-                {/* Clean Pure B&W Logo */}
-                <button
-                    onClick={() => scrollToSection('home')}
-                    className="flex items-center gap-2 group text-left"
-                    aria-label="Home"
-                >
-                    <span className="text-xl font-bold tracking-tight text-white group-hover:text-zinc-300 transition-colors">
-                        KJ<span className="text-zinc-500">.</span>
-                    </span>
-                </button>
-
-                {/* Desktop Nav - Clean B&W Brittany Chiang style */}
-                <div className="hidden md:flex items-center gap-8">
-                    {navLinks.map((link, index) => (
-                        <button
-                            key={link.id}
-                            onClick={() => scrollToSection(link.id)}
-                            className={cn(
-                                "text-xs font-mono uppercase tracking-widest transition-colors py-1",
-                                activeSection === link.id
-                                    ? "text-white font-semibold"
-                                    : "text-zinc-400 hover:text-white"
-                            )}
-                        >
-                            <span className="text-zinc-500 mr-1.5 font-normal">0{index + 1}.</span>
-                            {link.name}
-                        </button>
-                    ))}
-                </div>
-
-                {/* Mobile Menu Button */}
-                <button
-                    className="md:hidden p-2 text-zinc-400 hover:text-white"
-                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                >
-                    {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
-                </button>
+    useEffect(() => {
+        const onKey = event => {
+            if (event.key === 'Escape' && open) { setOpen(false); menuButton.current?.focus(); }
+        };
+        const onResize = () => { if (window.innerWidth >= 768) setOpen(false); };
+        window.addEventListener('keydown', onKey);
+        window.addEventListener('resize', onResize);
+        return () => { window.removeEventListener('keydown', onKey); window.removeEventListener('resize', onResize); };
+    }, [open]);
+    const navLink = name => <a key={name} href={`#${name.toLowerCase()}`}
+        aria-current={active === name.toLowerCase() ? 'location' : undefined}
+        onClick={() => setOpen(false)}
+        className={`text-sm py-3 transition-colors border-b ${active === name.toLowerCase() ? 'text-white border-zinc-300' : 'text-zinc-400 border-transparent hover:text-white hover:border-zinc-600'}`}>{name}</a>;
+    return <header className="fixed top-0 inset-x-0 z-40 bg-background/95 backdrop-blur-md border-b border-white/10">
+        <nav aria-label="Main navigation" className="max-w-6xl mx-auto px-6 md:px-10">
+            <div className="flex items-center justify-between h-20">
+                <a href="#home" aria-label="Karan Jagani — Home" onClick={() => setOpen(false)} className="text-xl font-semibold tracking-tight">KJ<span className="text-zinc-500">.</span></a>
+                <div className="hidden md:flex gap-7">{links.map(navLink)}</div>
+                <button ref={menuButton} className="md:hidden p-3" aria-label={open ? 'Close navigation' : 'Open navigation'} aria-expanded={open} aria-controls="mobile-navigation" onClick={() => setOpen(!open)}>{open ? <X size={22} /> : <Menu size={22} />}</button>
             </div>
-
-            {/* Mobile Menu */}
-            <AnimatePresence>
-                {isMobileMenuOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden bg-black border-b border-white/10 overflow-hidden"
-                    >
-                        <div className="flex flex-col p-6 gap-3">
-                            {navLinks.map((link, index) => (
-                                <button
-                                    key={link.id}
-                                    onClick={() => scrollToSection(link.id)}
-                                    className={cn(
-                                        "text-sm font-mono tracking-wider py-2 text-left uppercase transition-colors",
-                                        activeSection === link.id ? "text-white font-semibold" : "text-zinc-400 hover:text-white"
-                                    )}
-                                >
-                                    <span className="text-zinc-500 mr-2">0{index + 1}.</span>
-                                    {link.name}
-                                </button>
-                            ))}
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </motion.nav>
-    );
+            <div id="mobile-navigation" hidden={!open} className="md:hidden pb-5">{open && <div className="flex flex-col">{links.map(navLink)}</div>}</div>
+        </nav>
+    </header>;
 };

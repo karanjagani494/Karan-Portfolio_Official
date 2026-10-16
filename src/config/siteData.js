@@ -3,27 +3,28 @@ import DBMS_IMG from "../assets/images/DBMS.jpeg";
 import LEAF_IMG from "../assets/images/Img_pro.jpeg";
 export const siteData = {
     name: "Karan Jagani",
-    role: "Full Stack Developer & AI Engineer",
+    role: "Computer Science Graduate | Full-Stack Developer",
+    introduction: "I build modern web applications using Next.js, TypeScript, Python and PostgreSQL, with a growing interest in AI integration and intelligent software systems.",
     location: "Cambridge, UK",
     email: "karanjagani2003@gmail.com",
     social: [
         { name: "GitHub", url: "https://github.com/karanjagani494", icon: Github },
         { name: "LinkedIn", url: "https://www.linkedin.com/in/karan-jagani-596077242", icon: Linkedin },
-        { name: "Email", url: "karanjagani2003@gmail.com", icon: Mail }
+        { name: "Email", url: "mailto:karanjagani2003@gmail.com", icon: Mail }
     ],
     about: {
         title: "About Me",
         description: [
-            "I am a Computer Science student at Anglia Ruskin University with a passion for embedded systems, AI, and software development.",
-            "I enjoy problem-solving, teamwork, and building real-world projects that make a difference.",
-            "Currently exploring the intersection of hardware and software, and looking for opportunities to apply my skills in a professional setting."
+            "I'm a Computer Science graduate from Anglia Ruskin University, where I completed my BEng (Hons) with First Class Honours in July 2026.",
+            "I enjoy developing full-stack web applications and understanding how frontend interfaces, backend services and databases work together. My experience includes React, Next.js, TypeScript, Python, FastAPI and PostgreSQL.",
+            "I'm focused on strengthening my software engineering skills and exploring how AI, machine learning and intelligent systems can be integrated into practical applications."
         ],
     },
     education: [
         {
-            degree: "BEng (Hons) Computer Science",
+            degree: "BEng (Hons) Computer Science — First Class Honours",
             institution: "Anglia Ruskin University, Cambridge",
-            period: "Sep 2023 – Dec 2026",
+            period: "September 2023 – July 2026",
             modules: [
                 "Software Engineering",
                 "Database Design & Implementation",
@@ -34,17 +35,19 @@ export const siteData = {
         }
     ],
     skills: {
-        languages: ["Java", "C", "C++", "C#", "Python", "SQL", "JavaScript", "HTML5", "CSS"],
-        tools: ["MATLAB", "Git & GitHub", "Visual Studio", "VS Code", "MySQL"],
-        concepts: ["OOP", "Data Structures & Algorithms", "Operating Systems"],
-        ai: ["Basic ML & Neural Networks", "NumPy", "Pandas", "TensorFlow", "PyTorch"]
+        "Languages": ["TypeScript", "JavaScript", "Python", "Java", "C", "C++", "C#", "SQL"],
+        "Frontend": ["React", "Next.js", "HTML", "CSS", "Tailwind CSS"],
+        "Backend & databases": ["FastAPI", "REST APIs", "PostgreSQL", "MySQL", "SQLAlchemy"],
+        "Authentication & tooling": ["Google OAuth", "RBAC", "Git", "GitHub", "Docker", "Alembic"],
+        "AI & computer vision": ["Machine Learning", "OpenCV", "MATLAB", "NumPy", "Pandas", "TensorFlow", "PyTorch"],
+        "Core concepts": ["OOP", "Data Structures & Algorithms", "Operating Systems"]
     },
     experience: [
         {
             role: "Customer Assistant",
             company: "Sainsbury’s",
             location: "Cambridge, UK",
-            period: "Oct 2023 – Present",
+            period: "October 2023 – Present",
             description: [
                 "Demonstrated strong communication and teamwork skills.",
                 "Handled customer inquiries and resolved issues efficiently.",
@@ -55,7 +58,7 @@ export const siteData = {
             role: "Student Ambassador",
             company: "Anglia Ruskin University",
             location: "Cambridge, UK",
-            period: "Oct 2023 – Present",
+            period: "October 2023 – End date to be confirmed",
             description: [
                 "Guided visitors and prospective students during open days.",
                 "Represented the university with professionalism and enthusiasm.",
@@ -66,7 +69,7 @@ export const siteData = {
             role: "Visa Administrator",
             company: "MyCalculus Visa Consultant Services",
             location: "Rajkot, India",
-            period: "Jan 2023 – Jul 2023",
+            period: "January 2023 – July 2023",
             description: [
                 "Managed visa application documents with high accuracy.",
                 "Ensured compliance with immigration regulations.",
@@ -76,7 +79,23 @@ export const siteData = {
     ],
     projects: [
         {
+            id: 6,
+            title: "WattFlow",
+            subtitle: "Full-Stack Energy Broker Management Platform",
+            categories: ["Web", "Systems"],
+            description: "A full-stack energy broker management platform for business customers, consumption, tenders, contracts and renewals.",
+            longDescription: "A full-stack energy broker management platform for handling business customers, electricity consumption, tenders, simulated supplier quotes, contracts and renewals.",
+            note: "Portfolio demonstration only. Supplier quotes are simulated; this is not a live energy brokerage service and is not publicly deployed.",
+            timeline: "September 2026 – October 2026",
+            features: ["Email/password authentication and Google OAuth", "Multi-user organisation workspaces", "Role-based access control", "PostgreSQL with SQLAlchemy and Alembic migrations", "CSV consumption imports and charts", "Tenders and simulated supplier quote comparison", "Contract tracking and renewal dashboards", "Automated API workflow testing", "Docker Compose support"],
+            tech: ["Next.js", "React", "TypeScript", "Python", "FastAPI", "PostgreSQL", "SQLAlchemy", "Alembic", "Tailwind CSS", "Docker"],
+            github: "https://github.com/karanjagani494/WattFlow",
+            githubUnavailable: true,
+            image: null,
+        },
+        {
             id: 1,
+            categories: ["AI"],
             title: "Leaf Morphometric Analysis (MATLAB)",
             description: "A computer-vision pipeline to segment leaves and compute precise morphometric metrics.",
             longDescription: "A robust computer-vision pipeline designed to segment leaves using coin-calibration for scale. It employs morphological operations to clean masks and computes various colour and morphometric metrics such as GLI, centroid/medoid, area, length, and perimeter, providing fully annotated visual outputs.",
@@ -96,33 +115,35 @@ export const siteData = {
                 "Annotated Output Generation"
             ],
             tech: ["MATLAB", "Computer Vision", "Image Processing", "Morphology"],
-            link: "#",
-            github: "#",
+            link: null,
+            github: null,
             image: LEAF_IMG
         },
         {
             id: 2,
+            categories: ["Web"],
             title: "Portfolio Website",
             description: "A modern, animated portfolio website built with React and Framer Motion.",
-            longDescription: "A fully responsive, high-performance personal portfolio designed to showcase projects and skills with an immersive user experience. Built with React and TypeScript, it utilizes Framer Motion for complex animations including the starfield background and page transitions. Tailwind CSS ensures a clean, maintainable design system.",
+            longDescription: "A responsive personal portfolio built with React and JavaScript, Tailwind CSS and Framer Motion. It brings together project details, technical skills and experience with accessible navigation and restrained animations.",
             timeline: "Nov 2024 - Present",
             role: "Frontend Developer",
-            challenges: ["Optimizing 3D particle systems for mobile devices", "Designing a cohesive physics-based interaction model"],
+            challenges: ["Balancing subtle motion with accessibility", "Presenting detailed projects clearly across screen sizes"],
             features: [
                 "Performance-optimized animations",
-                "Interactive background effects",
+                "Accessible project details and filtering",
                 "Responsive grid layout",
-                "Aceternity UI components"
+                "Reusable React components"
             ],
-            tech: ["React", "TypeScript", "Tailwind CSS", "Framer Motion"],
-            link: "#",
-            github: "#",
-            image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800"
+            tech: ["React", "JavaScript", "Tailwind CSS", "Framer Motion"],
+            link: "https://karan-jagani.vercel.app/",
+            github: "https://github.com/karanjagani494/Karan-Portfolio_Official",
+            image: null
         },
         {
             id: 3,
+            categories: ["AI"],
             title: "Multi-Modal AI Analysis",
-            description: "A rigorous comparative study of classical Machine Learning versus Deep Learning architectures architectures.",
+            description: "A comparative study of classical Machine Learning versus Deep Learning architectures.",
             longDescription: "This comprehensive study evaluates the performance, scalability, and interpretability of various AI architectures. By benchmarking classical ML algorithms against state-of-the-art Deep Learning models across diverse datasets (tabular, image, audio, text), the project highlights key trade-offs in accuracy and resource efficiency. Explainability tools like SHAP and Grad-CAM were used to demystify model decision-making.",
             timeline: "Jan 2024 - Mar 2024",
             role: "AI Researcher",
@@ -134,13 +155,14 @@ export const siteData = {
                 "Performance metrics visualization",
                 "Python-based modular pipeline"
             ],
-            tech: ["Python", "Deep Learning", "NLP", "Computer Vision", "+1"],
-            link: "#",
-            github: "#",
-            image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=800"
+            tech: ["Python", "Deep Learning", "NLP", "Computer Vision"],
+            link: null,
+            github: null,
+            image: null
         },
         {
             id: 4,
+            categories: ["Systems"],
             title: "Together Culture Database System",
             description: "A comprehensive database solution for a community CIC.",
             longDescription: "Designed and implemented a robust database solution for Together Culture Cambridge, involving deep requirement analysis to map unstructured business documents into a normalized MySQL schema. The project focused on ensuring data integrity and enabling complex business intelligence reporting through optimized SQL queries.",
@@ -160,12 +182,13 @@ export const siteData = {
                 "Business Intelligence Reporting"
             ],
             tech: ["MySQL", "SQL", "Database Design", "UML", "Systems"],
-            link: "#",
-            github: "#",
+            link: null,
+            github: null,
             image: (DBMS_IMG)
         },
         {
             id: 5,
+            categories: ["Web", "Systems"],
             title: "Integrated Software Solution (C#)",
             description: "A complete software lifecycle project from requirements to deployment using C#.",
             longDescription: "A comprehensive software development project involving the full SDLC for a case study. Deliverables included a Problem Definition Document, detailed Software Design (Wireframes, ERD, UML Class & Sequence Diagrams), and a robust C# implementation. The project emphasized clean code practices, modular architecture, and rigorous testing.",
@@ -185,9 +208,9 @@ export const siteData = {
                 "Comprehensive Testing Strategy"
             ],
             tech: ["C#", ".NET", "SQL", "UML", "Web"],
-            link: "#",
-            github: "#",
-            image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800"
+            link: null,
+            github: null,
+            image: null
         }
     ]
 };

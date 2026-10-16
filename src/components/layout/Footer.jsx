@@ -3,7 +3,7 @@ import { siteData } from '../../config/siteData';
 export const Footer = () => {
     return (
         <footer className="bg-surface py-8 border-t border-white/5">
-            <div className="max-w-7xl mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="max-w-6xl mx-auto px-6 md:px-10 flex flex-col md:flex-row items-center justify-between gap-4">
                 <div className="text-gray-400 text-sm">
                     © {new Date().getFullYear()} {siteData.name}. All rights reserved.
                 </div>
@@ -12,9 +12,9 @@ export const Footer = () => {
                         <a
                             key={social.name}
                             href={social.url}
-                            target="_blank"
+                            target={social.name === "Email" ? undefined : "_blank"}
                             rel="noopener noreferrer"
-                            className="text-gray-400 hover:text-primary transition-colors"
+                            className="p-3 text-zinc-400 hover:text-white transition-colors"
                             aria-label={social.name}
                         >
                             <social.icon size={20} />

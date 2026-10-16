@@ -1,130 +1,42 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 import { SectionWrapper } from '../components/ui/SectionWrapper';
 import { ProjectCard } from '../components/ui/ProjectCard';
 import { siteData } from '../config/siteData';
 
-const Projects = () => {
+export default function Projects() {
     const [filter, setFilter] = useState('All');
-    const [selectedId, setSelectedId] = useState(null);
-
+    const [selected, setSelected] = useState(null);
+    const dialog = useRef(null);
     useEffect(() => {
-        if (selectedId) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'unset';
+        if (!selected) return;
+        const element = dialog.current;
+        const opener = document.activeElement;
+        const previousOverflow = document.body.style.overflow;
+        element.showModal();
+        document.body.style.overflow = 'hidden';
+        return () => { element.close(); document.body.style.overflow = previousOverflow; opener?.focus(); };
+    }, [selected]);
+    const projects = siteData.projects.filter(p => filter === 'All' || p.categories.includes(filter));
+    const trapFocus = event => {
+        if (event.key !== 'Tab') return;
+        const controls = [...dialog.current.querySelectorAll('button:not([disabled]), a[href]')];
+        const first = controls[0];
+        const last = controls.at(-1);
+        if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last?.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first?.focus();
         }
-        return () => {
-            document.body.style.overflow = 'unset';
-        };
-    }, [selectedId]);
-    const categories = ['All', 'Web', 'AI', 'Systems'];
-
-    // This is a simple filter logic. In a real app, you'd add a 'category' field to your project data.
-    // For now, I'll just show all projects or filter randomly/by keyword match if I added categories to data.
-    // I'll assume the data has categories or I'll just match keywords for this demo.
-
-    const filteredProjects = siteData.projects.filter(project => {
-        if (filter === 'All') return true;
-        // Simple keyword matching for demo purposes since we didn't add explicit categories to siteData yet
-        // You should add a 'category' field to siteData.ts
-        const searchString = (project.title + project.description + project.tech.join(' ')).toLowerCase();
-        if (filter === 'Web') return searchString.includes('react') || searchString.includes('web');
-        if (filter === 'AI') return searchString.includes('ai') || searchString.includes('learning') || searchString.includes('python');
-        if (filter === 'Systems') return searchString.includes('iot') || searchString.includes('arduino') || searchString.includes('embedded') || searchString.includes('sql') || searchString.includes('database') || searchString.includes('mysql');
-        return true;
-    });
-
-    return (
-        <div className="pt-10" onClick={() => selectedId && setSelectedId(null)}>
-            <SectionWrapper>
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Projects</h2>
-                    <p className="text-gray-400 max-w-2xl mx-auto">
-                        A collection of my work in software engineering, embedded systems, and AI.
-                    </p>
-                </div>
-
-                {/* Filter Tabs */}
-                <div className="flex justify-center gap-4 mb-12 flex-wrap">
-                    <LayoutGroup>
-                        {categories.map((category) => (
-                            <button
-                                key={category}
-                                onClick={() => setFilter(category)}
-                                className={`relative px-6 py-2 rounded-full text-sm font-medium transition-colors ${filter === category ? 'text-black' : 'text-gray-400 hover:text-white'
-                                    }`}
-                            >
-                                {category}
-                                {filter === category && (
-                                    <motion.div
-                                        layoutId="activeFilter"
-                                        initial={false}
-                                        className="absolute inset-0 bg-white rounded-full -z-10"
-                                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                                    />
-                                )}
-                            </button>
-                        ))}
-                    </LayoutGroup>
-                </div>
-
-                {/* Projects Grid */}
-                <div className="min-h-[300px]">
-                    <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {filteredProjects.map((project) => (
-                            <ProjectCard
-                                key={project.id}
-                                project={project}
-                                layoutId={`project-${project.id}`}
-                                onClick={() => setSelectedId(project.id)}
-                                className={selectedId === project.id ? 'opacity-0' : ''}
-                            />
-                        ))}
-                    </motion.div>
-
-                    {filteredProjects.length === 0 && (
-                        <div className="text-center py-20 text-gray-500">
-                            No projects found in this category.
-                        </div>
-                    )}
-                </div>
-
-                {/* Expanded Project Overlay */}
-                <AnimatePresence>
-                    {selectedId && (
-                        <>
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                onClick={() => setSelectedId(null)}
-                                className="fixed inset-0 bg-black/90 z-40 backdrop-blur-sm"
-                            />
-                            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
-                                <motion.div
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.95 }}
-                                    transition={{ duration: 0.2 }}
-                                    className="w-full max-w-4xl max-h-[90vh] pointer-events-auto overflow-y-auto custom-scrollbar rounded-2xl"
-                                >
-                                    {filteredProjects.find(p => p.id === selectedId) && (
-                                        <ProjectCard
-                                            project={filteredProjects.find(p => p.id === selectedId)}
-                                            layoutId={`project-${selectedId}`}
-                                            isExpanded={true}
-                                            onClick={() => setSelectedId(null)}
-                                        />
-                                    )}
-                                </motion.div>
-                            </div>
-                        </>
-                    )}
-                </AnimatePresence>
-            </SectionWrapper>
-        </div>
-    );
-};
-
-export default Projects;
+    };
+    return <SectionWrapper>
+        <div className="text-center mb-10"><p className="eyebrow mb-4">Selected work</p><h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-4">Featured Projects</h2><p className="text-zinc-400 max-w-xl mx-auto">Full-stack applications, computer vision and software engineering — from idea to implementation.</p></div>
+        <div role="group" aria-label="Filter projects" className="flex justify-center gap-2 mb-5 flex-wrap">{['All', 'Web', 'AI', 'Systems'].map(category => <button key={category} aria-pressed={category === filter} onClick={() => setFilter(category)} className={`button px-5 py-2 ${filter === category ? 'button-primary' : ''}`}>{category}</button>)}</div>
+        <p role="status" className="text-center text-xs text-zinc-400 mb-9">{projects.length} {projects.length === 1 ? 'project' : 'projects'}</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">{projects.map(project => <ProjectCard key={project.id} project={project} onClick={() => setSelected(project)} />)}</div>
+        <dialog ref={dialog} onKeyDown={trapFocus} aria-labelledby={selected ? `project-title-${selected.id}` : undefined} onCancel={() => setSelected(null)} onClick={event => { if (event.target === event.currentTarget) setSelected(null); }} className="bg-transparent w-[calc(100%-2rem)] max-w-3xl max-h-[90svh] rounded-xl">
+            {selected && <ProjectCard project={selected} isExpanded onClick={() => setSelected(null)} />}
+        </dialog>
+    </SectionWrapper>;
+}

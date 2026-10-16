@@ -1,3 +1,4 @@
+import { MotionConfig } from 'framer-motion';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { MainLayout } from './components/layout/MainLayout';
 import Home from './pages/Home';
@@ -6,28 +7,14 @@ import Projects from './pages/Projects';
 import Experience from './pages/Experience';
 import Contact from './pages/Contact';
 
-function App() {
-    return (
-        <Router>
-            <MainLayout>
-                <section id="home" className="min-h-screen flex flex-col justify-center">
-                    <Home />
-                </section>
-                <section id="about" className="min-h-screen flex flex-col justify-center py-20">
-                    <About />
-                </section>
-                <section id="projects" className="min-h-screen flex flex-col justify-center py-20">
-                    <Projects />
-                </section>
-                <section id="experience" className="min-h-screen flex flex-col justify-center py-20">
-                    <Experience />
-                </section>
-                <section id="contact" className="min-h-screen flex flex-col justify-center py-20">
-                    <Contact />
-                </section>
-            </MainLayout>
-        </Router>
-    );
+export default function App() {
+    return <Router><MotionConfig reducedMotion="user" transition={{ duration: 0.25, ease: 'easeOut' }}>
+        <MainLayout>
+            <section id="home"><Home /></section>
+            <section id="about"><About /></section>
+            <section id="projects"><Projects /></section>
+            <section id="experience"><Experience /></section>
+            <section id="contact"><Contact /></section>
+        </MainLayout>
+    </MotionConfig></Router>;
 }
-
-export default App;
