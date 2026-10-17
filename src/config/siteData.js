@@ -58,7 +58,7 @@ export const siteData = {
             role: "Student Ambassador",
             company: "Anglia Ruskin University",
             location: "Cambridge, UK",
-            period: "October 2023 – End date to be confirmed",
+            period: "October 2023 – March 2026",
             description: [
                 "Guided visitors and prospective students during open days.",
                 "Represented the university with professionalism and enthusiasm.",
