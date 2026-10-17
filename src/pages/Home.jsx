@@ -13,7 +13,7 @@ export default function Home() {
             <p className="text-base sm:text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed">{siteData.introduction}</p>
             <div className="flex flex-wrap justify-center gap-3 mt-9">
                 <a href="#projects" className="button button-primary">View projects <ArrowRight size={16} /></a>
-                <a href="/Karan_Jagani_CV.pdf" target="_blank" rel="noopener noreferrer" className="button" aria-label="View CV (PDF, opens in a new tab)">View CV <ArrowUpRight size={16} aria-hidden="true" /></a>
+                <a href="/KARAN JAGANI_CV.pdf" target="_blank" rel="noopener noreferrer" className="button" aria-label="View CV (PDF, opens in a new tab)">View CV <ArrowUpRight size={16} aria-hidden="true" /></a>
             </div>
             <div className="flex justify-center gap-7 mt-8">
                 {siteData.social.filter(s => s.name !== 'Email').map(s => <a key={s.name} href={s.url} target="_blank" rel="noopener noreferrer" className="text-link text-sm text-zinc-400">{s.name}</a>)}
@@ -21,3 +21,4 @@ export default function Home() {
         </Motion.div>
     </div>;
 }
+
