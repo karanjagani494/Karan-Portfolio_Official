@@ -1,42 +1,17 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { SectionWrapper } from '../components/ui/SectionWrapper';
 import { ProjectCard } from '../components/ui/ProjectCard';
 import { siteData } from '../config/siteData';
 
+const categories = ['All', 'Web', 'AI', 'Systems'];
+const matchesCategory = (project, category) => category === 'All' || project.categories.some(value => value.toLowerCase() === category.toLowerCase());
+
 export default function Projects() {
     const [filter, setFilter] = useState('All');
-    const [selected, setSelected] = useState(null);
-    const dialog = useRef(null);
-    useEffect(() => {
-        if (!selected) return;
-        const element = dialog.current;
-        const opener = document.activeElement;
-        const previousOverflow = document.body.style.overflow;
-        element.showModal();
-        document.body.style.overflow = 'hidden';
-        return () => { element.close(); document.body.style.overflow = previousOverflow; opener?.focus(); };
-    }, [selected]);
-    const projects = siteData.projects.filter(p => filter === 'All' || p.categories.includes(filter));
-    const trapFocus = event => {
-        if (event.key !== 'Tab') return;
-        const controls = [...dialog.current.querySelectorAll('button:not([disabled]), a[href]')];
-        const first = controls[0];
-        const last = controls.at(-1);
-        if (event.shiftKey && document.activeElement === first) {
-            event.preventDefault();
-            last?.focus();
-        } else if (!event.shiftKey && document.activeElement === last) {
-            event.preventDefault();
-            first?.focus();
-        }
-    };
+    const projects = siteData.projects.filter(project => matchesCategory(project, filter));
     return <SectionWrapper>
-        <div className="text-center mb-10"><p className="eyebrow mb-4">Selected work</p><h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-4">Featured Projects</h2><p className="text-zinc-400 max-w-xl mx-auto">Full-stack applications, computer vision and software engineering — from idea to implementation.</p></div>
-        <div role="group" aria-label="Filter projects" className="flex justify-center gap-2 mb-5 flex-wrap">{['All', 'Web', 'AI', 'Systems'].map(category => <button key={category} aria-pressed={category === filter} onClick={() => setFilter(category)} className={`button px-5 py-2 ${filter === category ? 'button-primary' : ''}`}>{category}</button>)}</div>
-        <p role="status" className="text-center text-xs text-zinc-400 mb-9">{projects.length} {projects.length === 1 ? 'project' : 'projects'}</p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">{projects.map(project => <ProjectCard key={project.id} project={project} onClick={() => setSelected(project)} />)}</div>
-        <dialog ref={dialog} onKeyDown={trapFocus} aria-labelledby={selected ? `project-title-${selected.id}` : undefined} onCancel={() => setSelected(null)} onClick={event => { if (event.target === event.currentTarget) setSelected(null); }} className="bg-transparent w-[calc(100%-2rem)] max-w-3xl max-h-[90svh] rounded-xl">
-            {selected && <ProjectCard project={selected} isExpanded onClick={() => setSelected(null)} />}
-        </dialog>
+        <div className="work-heading"><div><p className="eyebrow mb-4">Selected work / Portfolio</p><h2>A few things<br /><span>I've built.</span></h2></div><p>Full-stack applications, computer vision and software engineering. A closer look at the ideas and the work behind them.</p></div>
+        <div className="work-toolbar"><div role="group" aria-label="Filter projects" className="work-filters">{categories.map(category => <button type="button" key={category} aria-pressed={category === filter} aria-controls="filtered-projects" onClick={() => setFilter(category)}>{category}<span className="work-filter-count" aria-hidden="true">{siteData.projects.filter(project => matchesCategory(project, category)).length}</span></button>)}</div><p role="status" aria-live="polite">{projects.length} {filter === 'All' ? '' : `${filter} `}{projects.length === 1 ? 'project' : 'projects'}</p></div>
+        <div id="filtered-projects" className="work-list" aria-label={`${filter} projects`}>{projects.map((project, index) => <ProjectCard key={project.id} project={project} reversed={index % 2 === 1} />)}</div>
     </SectionWrapper>;
 }

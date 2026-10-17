@@ -4,7 +4,7 @@ Refinement completed locally on 16 October 2026. The owner subsequently authoriz
 
 ## Design and behavior
 
-Retained React/Vite, the centered hero, top navigation, Home/About/Projects/Experience/Contact order, portrait, timeline and project detail functionality. Refined charcoal surfaces, typography, spacing, borders, badges and links. Replaced the complex contact form with direct email and social links. Removed magnetic movement, custom cursor, starfield and sound code. Kept short Framer Motion reveals, hover underlines and gentle card elevation, with reduced-motion support.
+Retained React/Vite, the centered hero, top navigation, Home/About/Projects/Experience/Contact order, portrait, timeline and project detail functionality. Refined charcoal surfaces, typography, spacing, borders, badges and links. Retained direct email and social links. Restored the message form with its existing Formspree endpoint, inline success/error feedback and native validation after owner feedback. Removed magnetic movement, custom cursor, starfield and sound code. Kept short Framer Motion reveals, hover underlines and gentle card elevation, with reduced-motion support.
 
 Navigation now uses real section links, active indicators, accessible mobile controls and a skip link. Project details use a native modal dialog with explicit focus wrapping, Escape dismissal and focus restoration. Filters use explicit categories. Cards only expose legitimate available URLs; missing previews use neutral placeholders, and retained decorative illustrations are labelled accurately.
 
@@ -44,7 +44,7 @@ Navigation now uses real section links, active indicators, accessible mobile con
 - `src/pages/About.jsx`: biography, education, skills and optimized portrait.
 - `src/pages/Projects.jsx`: deterministic filters and accessible dialog.
 - `src/pages/Experience.jsx`: consistent spacing and heading.
-- `src/pages/Contact.jsx`: simple contact section without form-service dependency.
+- `src/pages/Contact.jsx`: contact information and restored message form using the existing Formspree endpoint.
 
 `package.json` and lockfile were audited and left unchanged. No dependency installation was required.
 
@@ -100,3 +100,15 @@ npm run dev
 ```
 
 Open Vite's printed Local URL. For a clean future checkout use `npm ci` first. Production verification: `npm run lint`, `npm run build`, then `npm run preview`.
+
+## Follow-up restoration
+
+Restored the Name, Email, Subject and Message form and white glowing experience timeline dots, with a gentle pulse for the current role and reduced-motion support. The owner requested that these follow-up changes remain local and not be pushed. No live test message was submitted.
+
+## Portfolio presentation update — 17 October 2026
+
+The owner has now requested committing and pushing the current portfolio to GitHub, superseding the earlier local-only instruction above. This includes the restored contact form and timeline styling.
+
+Projects now use alternating visual stories with tinted gradient surfaces, layered shadows, subtle perspective, category filters with counts, and inline expandable details. Removed small decorative project labels and numbering. Added a faint cursor-following glow with touch/reduced-motion exclusions and flowing hover underlines for project titles, education phrases, experience roles and companies. The View CV link opens the existing PDF in a new tab instead of forcing a download.
+
+Validation: production build and diff whitespace checks passed. Category data checks returned All 6, Web 3, AI 2 and Systems 3. Browser verification was attempted but the local preview connection timed out; filter click behavior and final visual appearance have not been verified in an automated browser. No contact-form test message was sent.
